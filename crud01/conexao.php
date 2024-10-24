@@ -1,12 +1,13 @@
-  <?
-    $server = "localhost";
-    $user = "root";
-    $pass = "";
-    $bd = "usuario";
+<?php
+$servername = "127.0.0.1";
+$username = "root";
+$dbname = "dbforms";
 
-    if ($conn = mysqli_connect($server, $user, $pass, $bd)) {
-s    } else {
-        echo "Erro";
-    }
+// Create connection
+$conexao = new mysqli($servername, $username, '', $dbname);
 
-    ?>
+// Check connection
+if ($conexao->connect_error) {
+  die("PROCEDIMENTO ✌️👅 " . $conexao->connect_error);
+}
+?>
