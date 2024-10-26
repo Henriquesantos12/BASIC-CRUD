@@ -1,17 +1,4 @@
 <?php
-$servername = "localhost";
-$user = "root";
-$pass = "";
-$db = "crud";
-
-// Conexão com o banco de dados
-$conn = mysqli_connect($servername, $user, $pass, $db);
-
-// Verifica se a conexão foi bem-sucedida
-if (!$conn) {
-    die("Conexão falhou: " . mysqli_connect_error());
-}
-
 // Verifica se o formulário foi enviado
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = mysqli_real_escape_string($conn, $_POST['nome']);
