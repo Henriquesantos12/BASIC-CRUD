@@ -14,9 +14,6 @@
 $sql = "SELECT id, name AS nome, email, message AS mensagem FROM users";
 $result = mysqli_query($conn, $sql);
 
-
-
-
 // Fecha a conexão
 mysqli_close($conn);
 ?>
