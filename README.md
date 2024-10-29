@@ -15,3 +15,19 @@ Um sistema de **Cadastro de Usuários** (CRUD) em PHP que permite gerenciar info
 - **MySQL**: Banco de dados relacional para armazenar os dados dos usuários.
 - **HTML5/CSS3**: Estrutura e estilo da interface.
 - **Git**: Controle de versão do código, utilizando branches para gerenciamento de funcionalidades e correções.
+
+
+## ## Pré-requisitos
+
+Antes de iniciar, certifique-se de ter os seguintes softwares instalados:
+
+- [XAMPP](https://www.apachefriends.org/index.html) (ou qualquer outro servidor local PHP/MySQL)
+- Navegador web (para acessar o projeto)
+
+## Passo a Passo de Instalação
+
+1. **Clone ou Baixe o Repositório**
+   - Clone o repositório do GitHub ou faça o download do arquivo `.zip` e extraia-o em uma pasta de sua escolha.
+
+   ```bash
+   git clone https://github.com/seu-usuario/seu-repositorio.git
