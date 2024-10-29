@@ -1,35 +1,17 @@
 <?php
-$servername = "localhost";
-$user = "root";
-$pass = "";
-$db = "crud";
-
-// Conexão com o banco de dados
-$conn = mysqli_connect($servername, $user, $pass, $db);
-
-// Verifica se a conexão foi bem-sucedida
-if (!$conn) {
-    die("Conexão falhou: " . mysqli_connect_error());
-}
-
-// Verifica se o formulário foi enviado
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $name = mysqli_real_escape_string($conn, $_POST['nome']);
-    $email = mysqli_real_escape_string($conn, $_POST['email']);
-    $message = mysqli_real_escape_string($conn, $_POST['mensagem']);
-    
+if (isset($_POST['id_user'])) {
+    $id_user = mysqli_real_escape_string($conn, $_POST['id_user']);
+    // Atualiza os dados no banco de dados
+    $sql_update = "UPDATE users SET name = '$name', email = '$email', message = '$message' WHERE id_user = '$id_user'";
+    mysqli_query($conn, $sql_update);
+} else {
     // Insere os dados no banco de dados
     $sql = "INSERT INTO users (name, email, message) VALUES ('$name', '$email', '$message')";
-    
-    if (mysqli_query($conn, $sql)) {
-        echo "Mensagem enviada com sucesso!";
-    } else {
-        echo "Erro: " . $sql . "<br>" . mysqli_error($conn);
-    }
+    mysqli_query($conn, $sql);
 }
 
 // Consulta para obter os dados existentes na tabela 'users'
-$sql = "SELECT id, name AS nome, email, message AS mensagem FROM users";
+$sql = "SELECT id_user, name AS nome, email, message AS mensagem FROM users";
 $result = mysqli_query($conn, $sql);
 ?>
 
@@ -38,8 +20,11 @@ $result = mysqli_query($conn, $sql);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="style.css"/>
+    
     <title>Formulário de Contato</title>
+    <style>
+        /* Seu estilo aqui */
+    </style>
 </head>
 <body>
     <h1>Contato</h1>
@@ -53,20 +38,20 @@ $result = mysqli_query($conn, $sql);
         <label for="mensagem">Mensagem:</label>
         <textarea name="mensagem" id="mensagem" required></textarea>
 
-        <button type="submit">Enviar</button>
+        <button type="submit" class="btn-enviar">Enviar</button>
+        
     </form>
 
-    <!-- Tabela que exibe os registros do banco de dados -->
     <h2>Registros</h2>
-    <table border="1" cellpadding="10">
+    <table>
         <tr>
             <th>ID</th>
             <th>Nome</th>
             <th>Email</th>
             <th>Mensagem</th>
+            <th>Ações</th>
         </tr>
         <?php
-        // Verifica se há registros no banco e os exibe na tabela
         if (mysqli_num_rows($result) > 0) {
             while ($row = mysqli_fetch_assoc($result)) {
                 echo "<tr>";
@@ -74,13 +59,50 @@ $result = mysqli_query($conn, $sql);
                 echo "<td>{$row['nome']}</td>";
                 echo "<td>{$row['email']}</td>";
                 echo "<td>{$row['mensagem']}</td>";
-                echo "</tr>";
+                echo "<td>";
+                // Formulário de atualização
+                echo "<form action='update.php' method='POST' style='display:inline;'>";
+                echo "<input type='hidden' name='id_user' value='{$row['id_user']}'>";
+                echo "<input type='text' name='nome' value='{$row['nome']}' required>";
+                echo "<input type='email' name='email' value='{$row['email']}' required>";
+                echo "<textarea name='mensagem' required>{$row['mensagem']}</textarea>";
+                echo "<button type='submit' action='./update.php' class='btn-atualizar'>Atualizar</button>";
+                echo "</form>";
+
             }
         } else {
-            echo "<tr><td colspan='4'>Nenhum registro encontrado.</td></tr>";
+            echo "<tr><td colspan='5'>Nenhum registro encontrado.</td></tr>";
         }
+
+            // Loop para gerar a tabela com link de atualização
+            if (mysqli_num_rows($result) > 0) {
+                while ($row = mysqli_fetch_assoc($result)) {
+                    echo "<tr>";
+                    echo "<td>{$row['id_user']}</td>";
+                    echo "<td>{$row['nome']}</td>";
+                    echo "<td>{$row['email']}</td>";
+                    echo "<td>{$row['mensagem']}</td>";
+                    echo "<td>";
+                    echo "<a href='update.php?id_user={$row['id_user']}' class='btn-atualizar'>Atualizar</a>";
+                    echo "</td>";
+                    echo "</tr>";
+                }
+            } else {
+                echo "<tr><td colspan='5'>Nenhum registro encontrado.</td></tr>";
+            }
+            ?>
+
         ?>
     </table>
+
+    <script>
+        function deletarRegistro(id) {
+            if (confirm("Tem certeza que deseja deletar este registro?")) {
+                // Implementar a lógica de deleção aqui
+                alert("Deletar registro com ID: " + id);
+            }
+        }
+    </script>
 </body>
 </html>
 
