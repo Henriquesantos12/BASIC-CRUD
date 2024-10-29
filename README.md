@@ -17,7 +17,7 @@ Um sistema de **Cadastro de Usuários** (CRUD) em PHP que permite gerenciar info
 - **Git**: Controle de versão do código, utilizando branches para gerenciamento de funcionalidades e correções.
 
 
-## ## Pré-requisitos
+## 😎 Pré-requisitos
 
 Antes de iniciar, certifique-se de ter os seguintes softwares instalados:
 
